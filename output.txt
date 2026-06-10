@@ -1,0 +1,672 @@
+mysql> use nit;
+Database changed
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| nit                |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> show tables;
++---------------+
+| Tables_in_nit |
++---------------+
+| customers     |
+| student       |
++---------------+
+2 rows in set (0.01 sec)
+
+mysql> select * from student;
++---------+----+---------+-------+
+| name    | id | address | marks |
++---------+----+---------+-------+
+| prakash | 12 | hyd     |    78 |
+| cathy   | 17 | delhi   |    90 |
+| kodi    | 40 | bng     |    66 |
+| alex    | 45 | hyd     |    79 |
+| dolly   | 48 | pune    |    67 |
+| chancy  | 78 | mumbai  |    34 |
++---------+----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select name from student;
++---------+
+| name    |
++---------+
+| prakash |
+| cathy   |
+| kodi    |
+| alex    |
+| dolly   |
+| chancy  |
++---------+
+6 rows in set (0.00 sec)
+
+mysql> select name,id from student;
++---------+----+
+| name    | id |
++---------+----+
+| prakash | 12 |
+| cathy   | 17 |
+| kodi    | 40 |
+| alex    | 45 |
+| dolly   | 48 |
+| chancy  | 78 |
++---------+----+
+6 rows in set (0.00 sec)
+
+mysql> select * from student where id=12;
++---------+----+---------+-------+
+| name    | id | address | marks |
++---------+----+---------+-------+
+| prakash | 12 | hyd     |    78 |
++---------+----+---------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from student;
++---------+----+---------+-------+
+| name    | id | address | marks |
++---------+----+---------+-------+
+| prakash | 12 | hyd     |    78 |
+| cathy   | 17 | delhi   |    90 |
+| kodi    | 40 | bng     |    66 |
+| alex    | 45 | hyd     |    79 |
+| dolly   | 48 | pune    |    67 |
+| chancy  | 78 | mumbai  |    34 |
++---------+----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> insert into student values('sam',12,'hyd',56);
+ERROR 1062 (23000): Duplicate entry '12' for key 'student.PRIMARY'
+mysql> update student set address='chennai' where id=45;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++---------+----+---------+-------+
+| name    | id | address | marks |
++---------+----+---------+-------+
+| prakash | 12 | hyd     |    78 |
+| cathy   | 17 | delhi   |    90 |
+| kodi    | 40 | bng     |    66 |
+| alex    | 45 | chennai |    79 |
+| dolly   | 48 | pune    |    67 |
+| chancy  | 78 | mumbai  |    34 |
++---------+----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> alter table student add phoneNo int;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++---------+----+---------+-------+---------+
+| name    | id | address | marks | phoneNo |
++---------+----+---------+-------+---------+
+| prakash | 12 | hyd     |    78 |    NULL |
+| cathy   | 17 | delhi   |    90 |    NULL |
+| kodi    | 40 | bng     |    66 |    NULL |
+| alex    | 45 | chennai |    79 |    NULL |
+| dolly   | 48 | pune    |    67 |    NULL |
+| chancy  | 78 | mumbai  |    34 |    NULL |
++---------+----+---------+-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> update student set phoneNo=123;
+Query OK, 6 rows affected (0.01 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> select * from student;
++---------+----+---------+-------+---------+
+| name    | id | address | marks | phoneNo |
++---------+----+---------+-------+---------+
+| prakash | 12 | hyd     |    78 |     123 |
+| cathy   | 17 | delhi   |    90 |     123 |
+| kodi    | 40 | bng     |    66 |     123 |
+| alex    | 45 | chennai |    79 |     123 |
+| dolly   | 48 | pune    |    67 |     123 |
+| chancy  | 78 | mumbai  |    34 |     123 |
++---------+----+---------+-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> update student set phoneNo=456 where id=12;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++---------+----+---------+-------+---------+
+| name    | id | address | marks | phoneNo |
++---------+----+---------+-------+---------+
+| prakash | 12 | hyd     |    78 |     456 |
+| cathy   | 17 | delhi   |    90 |     123 |
+| kodi    | 40 | bng     |    66 |     123 |
+| alex    | 45 | chennai |    79 |     123 |
+| dolly   | 48 | pune    |    67 |     123 |
+| chancy  | 78 | mumbai  |    34 |     123 |
++---------+----+---------+-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> update student set phoneNo=789 where id=17;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++---------+----+---------+-------+---------+
+| name    | id | address | marks | phoneNo |
++---------+----+---------+-------+---------+
+| prakash | 12 | hyd     |    78 |     456 |
+| cathy   | 17 | delhi   |    90 |     789 |
+| kodi    | 40 | bng     |    66 |     123 |
+| alex    | 45 | chennai |    79 |     123 |
+| dolly   | 48 | pune    |    67 |     123 |
+| chancy  | 78 | mumbai  |    34 |     123 |
++---------+----+---------+-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> update student set phoneNo=8923 where id=40;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set phoneNo=8945 where id=45;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set phoneNo=9345 where id=48;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set phoneNo=9378 where id=78;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++---------+----+---------+-------+---------+
+| name    | id | address | marks | phoneNo |
++---------+----+---------+-------+---------+
+| prakash | 12 | hyd     |    78 |     456 |
+| cathy   | 17 | delhi   |    90 |     789 |
+| kodi    | 40 | bng     |    66 |    8923 |
+| alex    | 45 | chennai |    79 |    8945 |
+| dolly   | 48 | pune    |    67 |    9345 |
+| chancy  | 78 | mumbai  |    34 |    9378 |
++---------+----+---------+-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(30) | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| marks   | int         | YES  |     | NULL    |       |
+| phoneNo | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student modify column name varchar(60);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(60) | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| marks   | int         | YES  |     | NULL    |       |
+| phoneNo | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student drop column phoneNo;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++---------+----+---------+-------+
+| name    | id | address | marks |
++---------+----+---------+-------+
+| prakash | 12 | hyd     |    78 |
+| cathy   | 17 | delhi   |    90 |
+| kodi    | 40 | bng     |    66 |
+| alex    | 45 | chennai |    79 |
+| dolly   | 48 | pune    |    67 |
+| chancy  | 78 | mumbai  |    34 |
++---------+----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> delete from student where name='kodi';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student;
++---------+----+---------+-------+
+| name    | id | address | marks |
++---------+----+---------+-------+
+| prakash | 12 | hyd     |    78 |
+| cathy   | 17 | delhi   |    90 |
+| alex    | 45 | chennai |    79 |
+| dolly   | 48 | pune    |    67 |
+| chancy  | 78 | mumbai  |    34 |
++---------+----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select sum(marks) from student;
++------------+
+| sum(marks) |
++------------+
+|        348 |
++------------+
+1 row in set (0.01 sec)
+
+mysql> select avg(marks) from student;
++------------+
+| avg(marks) |
++------------+
+|    69.6000 |
++------------+
+1 row in set (0.01 sec)
+
+mysql> select count(name) from student;
++-------------+
+| count(name) |
++-------------+
+|           5 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select max(marks) from student;
++------------+
+| max(marks) |
++------------+
+|         90 |
++------------+
+1 row in set (0.01 sec)
+
+mysql> select min(marks) from student;
++------------+
+| min(marks) |
++------------+
+|         34 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select from student order by marks;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from student order by marks' at line 1
+mysql> select * from student order by marks;
++---------+----+---------+-------+
+| name    | id | address | marks |
++---------+----+---------+-------+
+| chancy  | 78 | mumbai  |    34 |
+| dolly   | 48 | pune    |    67 |
+| prakash | 12 | hyd     |    78 |
+| alex    | 45 | chennai |    79 |
+| cathy   | 17 | delhi   |    90 |
++---------+----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student order by marks desc;
++---------+----+---------+-------+
+| name    | id | address | marks |
++---------+----+---------+-------+
+| cathy   | 17 | delhi   |    90 |
+| alex    | 45 | chennai |    79 |
+| prakash | 12 | hyd     |    78 |
+| dolly   | 48 | pune    |    67 |
+| chancy  | 78 | mumbai  |    34 |
++---------+----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from CUSTOMERS;
++------+----------+------+-----------+--------+
+| ID   | NAME     | AGE  | ADDRESS   | SALARY |
++------+----------+------+-----------+--------+
+|    1 | Ramesh   |   32 | Ahmedabad |   2000 |
+|    2 | Khilan   |   25 | Delhi     |   1500 |
+|    3 | Kaushik  |   23 | Kota      |   2000 |
+|    4 | Chaitali |   25 | Mumbai    |   6500 |
+|    5 | Hardik   |   27 | Bhopal    |   8500 |
+|    6 | Komal    |   22 | MP        |   4500 |
+|    7 | Muffy    |   24 | Indore    |  10000 |
++------+----------+------+-----------+--------+
+7 rows in set (0.00 sec)
+
+mysql> select ID, NAME, SALARY from CUSTOMERS;
++------+----------+--------+
+| ID   | NAME     | SALARY |
++------+----------+--------+
+|    1 | Ramesh   |   2000 |
+|    2 | Khilan   |   1500 |
+|    3 | Kaushik  |   2000 |
+|    4 | Chaitali |   6500 |
+|    5 | Hardik   |   8500 |
+|    6 | Komal    |   4500 |
+|    7 | Muffy    |  10000 |
++------+----------+--------+
+7 rows in set (0.00 sec)
+
+mysql> select ID, NAME, SALARY from CUSTOMERS where SALARY>2000;
++------+----------+--------+
+| ID   | NAME     | SALARY |
++------+----------+--------+
+|    4 | Chaitali |   6500 |
+|    5 | Hardik   |   8500 |
+|    6 | Komal    |   4500 |
+|    7 | Muffy    |  10000 |
++------+----------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select ID, NAME, SALARY from CUSTOMERS where NAME='Hardik';
++------+--------+--------+
+| ID   | NAME   | SALARY |
++------+--------+--------+
+|    5 | Hardik |   8500 |
++------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select ID, NAME, SALARY from CUSTOMERS where SALARY>2000 and AGE<25;
++------+-------+--------+
+| ID   | NAME  | SALARY |
++------+-------+--------+
+|    6 | Komal |   4500 |
+|    7 | Muffy |  10000 |
++------+-------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select ID, NAME, SALARY from CUSTOMERS where SALARY>2000 or AGE<25;
++------+----------+--------+
+| ID   | NAME     | SALARY |
++------+----------+--------+
+|    3 | Kaushik  |   2000 |
+|    4 | Chaitali |   6500 |
+|    5 | Hardik   |   8500 |
+|    6 | Komal    |   4500 |
+|    7 | Muffy    |  10000 |
++------+----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update CUSTOMERS set ADDRESS='Pune' where ID=6;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from CUSTOMERS;
++------+----------+------+-----------+--------+
+| ID   | NAME     | AGE  | ADDRESS   | SALARY |
++------+----------+------+-----------+--------+
+|    1 | Ramesh   |   32 | Ahmedabad |   2000 |
+|    2 | Khilan   |   25 | Delhi     |   1500 |
+|    3 | Kaushik  |   23 | Kota      |   2000 |
+|    4 | Chaitali |   25 | Mumbai    |   6500 |
+|    5 | Hardik   |   27 | Bhopal    |   8500 |
+|    6 | Komal    |   22 | Pune      |   4500 |
+|    7 | Muffy    |   24 | Indore    |  10000 |
++------+----------+------+-----------+--------+
+7 rows in set (0.00 sec)
+
+mysql> update CUSTOMERS set ADDRESS='Pune', SALARY=10000;
+Query OK, 7 rows affected (0.01 sec)
+Rows matched: 7  Changed: 7  Warnings: 0
+
+mysql> select * from CUSTOMERS;
++------+----------+------+---------+--------+
+| ID   | NAME     | AGE  | ADDRESS | SALARY |
++------+----------+------+---------+--------+
+|    1 | Ramesh   |   32 | Pune    |  10000 |
+|    2 | Khilan   |   25 | Pune    |  10000 |
+|    3 | Kaushik  |   23 | Pune    |  10000 |
+|    4 | Chaitali |   25 | Pune    |  10000 |
+|    5 | Hardik   |   27 | Pune    |  10000 |
+|    6 | Komal    |   22 | Pune    |  10000 |
+|    7 | Muffy    |   24 | Pune    |  10000 |
++------+----------+------+---------+--------+
+7 rows in set (0.00 sec)
+
+mysql> delete from CUSTOMERS where ID=6;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from CUSTOMERS;
++------+----------+------+---------+--------+
+| ID   | NAME     | AGE  | ADDRESS | SALARY |
++------+----------+------+---------+--------+
+|    1 | Ramesh   |   32 | Pune    |  10000 |
+|    2 | Khilan   |   25 | Pune    |  10000 |
+|    3 | Kaushik  |   23 | Pune    |  10000 |
+|    4 | Chaitali |   25 | Pune    |  10000 |
+|    5 | Hardik   |   27 | Pune    |  10000 |
+|    7 | Muffy    |   24 | Pune    |  10000 |
++------+----------+------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from CUSTOMERS where SALARY like '200%';
+Empty set (0.00 sec)
+
+mysql> select * from CUSTOMERS where SALARY LIKE '200%';
+Empty set (0.00 sec)
+
+mysql> select * from CUSTOMERS where SALARY LIKE '100%';
++------+----------+------+---------+--------+
+| ID   | NAME     | AGE  | ADDRESS | SALARY |
++------+----------+------+---------+--------+
+|    1 | Ramesh   |   32 | Pune    |  10000 |
+|    2 | Khilan   |   25 | Pune    |  10000 |
+|    3 | Kaushik  |   23 | Pune    |  10000 |
+|    4 | Chaitali |   25 | Pune    |  10000 |
+|    5 | Hardik   |   27 | Pune    |  10000 |
+|    7 | Muffy    |   24 | Pune    |  10000 |
++------+----------+------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from CUSTOMERS where NAME like 'C%';
++------+----------+------+---------+--------+
+| ID   | NAME     | AGE  | ADDRESS | SALARY |
++------+----------+------+---------+--------+
+|    4 | Chaitali |   25 | Pune    |  10000 |
++------+----------+------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from CUSTOMERS where NAME like '%i';
++------+----------+------+---------+--------+
+| ID   | NAME     | AGE  | ADDRESS | SALARY |
++------+----------+------+---------+--------+
+|    4 | Chaitali |   25 | Pune    |  10000 |
++------+----------+------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from CUSTOMERS where NAME like '_a';
+Empty set (0.00 sec)
+
+mysql> select * from CUSTOMERS where NAME like '_a%';
++------+---------+------+---------+--------+
+| ID   | NAME    | AGE  | ADDRESS | SALARY |
++------+---------+------+---------+--------+
+|    1 | Ramesh  |   32 | Pune    |  10000 |
+|    3 | Kaushik |   23 | Pune    |  10000 |
+|    5 | Hardik  |   27 | Pune    |  10000 |
++------+---------+------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from CUSTOMERS where NAME like '%s_';
++------+--------+------+---------+--------+
+| ID   | NAME   | AGE  | ADDRESS | SALARY |
++------+--------+------+---------+--------+
+|    1 | Ramesh |   32 | Pune    |  10000 |
++------+--------+------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select TOP 3 * CUSTOMERS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '3 * CUSTOMERS' at line 1
+mysql> select TOP 3 * from CUSTOMERS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '3 * from CUSTOMERS' at line 1
+mysql> select top 3 * from CUSTOMERS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '3 * from CUSTOMERS' at line 1
+mysql> select * from CUSTOMERS limit 3;
++------+---------+------+---------+--------+
+| ID   | NAME    | AGE  | ADDRESS | SALARY |
++------+---------+------+---------+--------+
+|    1 | Ramesh  |   32 | Pune    |  10000 |
+|    2 | Khilan  |   25 | Pune    |  10000 |
+|    3 | Kaushik |   23 | Pune    |  10000 |
++------+---------+------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from CUSTOMERS order by NAME,SALARY;
++------+----------+------+---------+--------+
+| ID   | NAME     | AGE  | ADDRESS | SALARY |
++------+----------+------+---------+--------+
+|    4 | Chaitali |   25 | Pune    |  10000 |
+|    5 | Hardik   |   27 | Pune    |  10000 |
+|    3 | Kaushik  |   23 | Pune    |  10000 |
+|    2 | Khilan   |   25 | Pune    |  10000 |
+|    7 | Muffy    |   24 | Pune    |  10000 |
+|    1 | Ramesh   |   32 | Pune    |  10000 |
++------+----------+------+---------+--------+
+6 rows in set (0.01 sec)
+
+mysql> select * from CUSTOMERS order by NAME DESC;
++------+----------+------+---------+--------+
+| ID   | NAME     | AGE  | ADDRESS | SALARY |
++------+----------+------+---------+--------+
+|    1 | Ramesh   |   32 | Pune    |  10000 |
+|    7 | Muffy    |   24 | Pune    |  10000 |
+|    2 | Khilan   |   25 | Pune    |  10000 |
+|    3 | Kaushik  |   23 | Pune    |  10000 |
+|    5 | Hardik   |   27 | Pune    |  10000 |
+|    4 | Chaitali |   25 | Pune    |  10000 |
++------+----------+------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select NAME, sum(SALARY) from CUSTOMERS group by NAME;
++----------+-------------+
+| NAME     | sum(SALARY) |
++----------+-------------+
+| Ramesh   |       10000 |
+| Khilan   |       10000 |
+| Kaushik  |       10000 |
+| Chaitali |       10000 |
+| Hardik   |       10000 |
+| Muffy    |       10000 |
++----------+-------------+
+6 rows in set (0.01 sec)
+
+mysql> select * from student;
++---------+----+---------+-------+
+| name    | id | address | marks |
++---------+----+---------+-------+
+| prakash | 12 | hyd     |    78 |
+| cathy   | 17 | delhi   |    90 |
+| alex    | 45 | chennai |    79 |
+| dolly   | 48 | pune    |    67 |
+| chancy  | 78 | mumbai  |    34 |
++---------+----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select name, sum(marks) from student group by name;
++---------+------------+
+| name    | sum(marks) |
++---------+------------+
+| prakash |         78 |
+| cathy   |         90 |
+| alex    |         79 |
+| dolly   |         67 |
+| chancy  |         34 |
++---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select marks from student order by marks;
++-------+
+| marks |
++-------+
+|    34 |
+|    67 |
+|    78 |
+|    79 |
+|    90 |
++-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into student values('sam',89,'hyd',79)
+    -> insert into student values('sam',89,'hyd',79);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'insert into student values('sam',89,'hyd',79)' at line 2
+mysql> update student set marks=79 where id=48;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++---------+----+---------+-------+
+| name    | id | address | marks |
++---------+----+---------+-------+
+| prakash | 12 | hyd     |    78 |
+| cathy   | 17 | delhi   |    90 |
+| alex    | 45 | chennai |    79 |
+| dolly   | 48 | pune    |    79 |
+| chancy  | 78 | mumbai  |    34 |
++---------+----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select marks from student order by marks;
++-------+
+| marks |
++-------+
+|    34 |
+|    78 |
+|    79 |
+|    79 |
+|    90 |
++-------+
+5 rows in set (0.00 sec)
+
+mysql> select distinct marks from student order by marks;
++-------+
+| marks |
++-------+
+|    34 |
+|    78 |
+|    79 |
+|    90 |
++-------+
+4 rows in set (0.00 sec)
+
+mysql> select from student order by name, marks;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from student order by name, marks' at line 1
+mysql> select * from student order by name, marks;
++---------+----+---------+-------+
+| name    | id | address | marks |
++---------+----+---------+-------+
+| alex    | 45 | chennai |    79 |
+| cathy   | 17 | delhi   |    90 |
+| chancy  | 78 | mumbai  |    34 |
+| dolly   | 48 | pune    |    79 |
+| prakash | 12 | hyd     |    78 |
++---------+----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student order by name desc;
++---------+----+---------+-------+
+| name    | id | address | marks |
++---------+----+---------+-------+
+| prakash | 12 | hyd     |    78 |
+| dolly   | 48 | pune    |    79 |
+| chancy  | 78 | mumbai  |    34 |
+| cathy   | 17 | delhi   |    90 |
+| alex    | 45 | chennai |    79 |
++---------+----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student order by (case address when 'delhi' then 1 when 'hyd' then 2 when 'mumbai' then 3 when 'chennai' then 4  when 'pune' then 5 else 100 end) asc, address desc;
++---------+----+---------+-------+
+| name    | id | address | marks |
++---------+----+---------+-------+
+| cathy   | 17 | delhi   |    90 |
+| prakash | 12 | hyd     |    78 |
+| chancy  | 78 | mumbai  |    34 |
+| alex    | 45 | chennai |    79 |
+| dolly   | 48 | pune    |    79 |
++---------+----+---------+-------+
+5 rows in set (0.00 sec)
+
